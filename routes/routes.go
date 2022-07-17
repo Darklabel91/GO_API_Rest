@@ -3,6 +3,7 @@ package routs
 import (
 	"github.com/Darklabel91/GO_API_Rest/controllers"
 	"github.com/Darklabel91/GO_API_Rest/middleware"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -24,5 +25,6 @@ func HandleRequest() {
 	router.HandleFunc(singlePersonality, controllers.ReturnPersonality).Methods("Get")
 	router.HandleFunc(singlePersonality, controllers.DeletePersonality).Methods("Delete")
 	router.HandleFunc(singlePersonality, controllers.EditPersonality).Methods("Put")
-	log.Fatal(http.ListenAndServe(port, router))
+	log.Fatal(http.ListenAndServe(port, handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(router)))
+
 }
